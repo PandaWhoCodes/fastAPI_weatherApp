@@ -43,7 +43,7 @@
                 <g id="cloud1" class="cloud"></g>
             </svg>
             <div class="details">
-                <div class="temp">20<span>c</span></div>
+                <div class="temp" id="temp">20<span>c</span></div>
                 <div class="right">
                     <div id="date">Monday 22 August</div>
                     <div id="summary"></div>
@@ -59,5 +59,44 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/snap.svg/0.4.1/snap.svg-min.js"></script>
 
     <script src="/static/js/script.js"></script>
+    <script>
+
+        openWeatherMap = {"Haze":"wind","Mist":"wind","Clear":"sun","Clouds":"wind","Snow":"snow","Thunderstorm":"thunder","Rain":"rain"}
+        
+        function weather_map(curr_weather){
+            console.log(curr_weather);
+            console.log(openWeatherMap);
+            for(var i=0;i<weather.length;i++){
+                // TODO: change this
+                if (curr_weather in openWeatherMap){
+                    if(openWeatherMap[curr_weather] == weather[i]["type"]){
+                        console.log(weather[i]);
+                        return weather[i];
+                    }
+                }
+            }
+            return weather[4];
+        }
+
+        function set_weather_card(weather_data){
+            var temperature = weather_data["main"]["temp_max"];
+            var curr_weather = weather_data["weather"][0]["main"];
+            $("#temp").text(temperature.toString());
+            changeWeather(weather_map(curr_weather));
+        }   
+
+        $.ajax({
+                type: "GET",
+                url: "/api/weather/chennai",
+                cache: false,
+                // data: dataString,
+
+                success: function(data){
+                //$("#more").after(html);
+                set_weather_card(data);
+                }
+                });
+
+        </script>
     </body>
     </html>

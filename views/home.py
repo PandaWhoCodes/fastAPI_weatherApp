@@ -7,7 +7,6 @@ from starlette.staticfiles import StaticFiles
 templates = Jinja2Templates("templates")
 
 router = fastapi.APIRouter()
-router.mount("/static", StaticFiles(directory="static"), name="static")
 
 @router.get("/")
 def index(request: Request):
