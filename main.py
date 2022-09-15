@@ -11,15 +11,14 @@ from views import home
 api = fastapi.FastAPI()
 
 templates = Jinja2Templates("templates")
-api.mount("/static", StaticFiles(directory="static"), name="static")
 
-def configure():
-    configure_routing()
 
 def configure_routing():
     api.include_router(home.router)
     api.include_router(weather_api.router)
 
+def configure():
+    configure_routing()
 
 
 if __name__ == "__main__":
