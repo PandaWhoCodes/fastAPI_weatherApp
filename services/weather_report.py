@@ -7,9 +7,7 @@ load_dotenv(verbose=True)
 API_KEY = os.environ.get("API_KEY")
 
 
-async def get_weather_report_async(
-    city: str, state: Optional[str], country: str
-) -> dict:
+async def get_weather_report_async(city: str, country: str) -> dict:
     q = f"{city},{country}"
     URL = f"http://api.openweathermap.org/data/2.5/weather?q={q}&APPID={API_KEY}&units=metric"
     async with httpx.AsyncClient() as client:
